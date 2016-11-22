@@ -36,7 +36,6 @@ public class UnitStringCalculator {
         Assert.assertEquals(0, stringCalculator.add(""));
 
     }
-
     @Test
     public void testAStringWhichContainsNumbersToSum1() {
         Assert.assertEquals(1, stringCalculator.add("1"));
@@ -51,10 +50,18 @@ public class UnitStringCalculator {
     public void testAddMethodShouldHandleNewlinesAsPartOfTheInputString() {
         Assert.assertEquals(6, stringCalculator.add("1\n2,3"));
     }
-
     @Test
     public void testNumberSeparatorIsExpressedByParalelBars() {
         Assert.assertEquals(3, stringCalculator.add("//;\n1;2"));
-
     }
+
+    @Test(expected = NumberFormatException.class)
+    public void testNegativeNumbersShouldThrownAnExcpetion(){
+        stringCalculator.add("//;\n-1;-2;-34,-56,345,1023");
+    }
+    @Test
+    public void testSumLargerNumberOfElementsUsingDiferentDelimiters() {
+       Assert.assertEquals(1461 , stringCalculator.add("//;\n1;2;34.56/345%1023"));
+    }
+
 }
