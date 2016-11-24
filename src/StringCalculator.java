@@ -25,9 +25,10 @@ public class StringCalculator {
 
     private int sumPositiveNumbers(String numbers) {
         int sum = 0;
+        int aux = 0;
         Matcher m = Pattern.compile("[0-9]+").matcher(numbers);
         while (m.find()) {
-            sum += Integer.parseInt(m.group(0));
+            sum += (aux = Integer.parseInt(m.group(0))) >= 1000 ? 0 : aux;
         }
         return sum;
     }

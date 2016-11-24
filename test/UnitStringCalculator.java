@@ -58,9 +58,18 @@ public class UnitStringCalculator {
     public void testNegativeNumbersShouldThrownAnExcpetion(){
         stringCalculator.add("//;\n-1;-2;-34,-56,345,1023");
     }
-    @Test
-    public void testSumLargerNumberOfElementsUsingDiferentDelimiters() {
-       Assert.assertEquals(1461 , stringCalculator.add("//;\n1;2;34.56/345%1023"));
+
+    @Test(expected = NumberFormatException.class)
+    public void testJustOneNegativeNumberOnTheList(){
+        stringCalculator.add("//;\n1;2;34,-56,345,1023");
     }
 
+    @Test
+    public void testSumLargerNumberOfElementsUsingDiferentDelimiters() {
+       Assert.assertEquals(438 , stringCalculator.add("//;\n1;2;34.56/345%"));
+    }
+    @Test
+    public void testNumbersBiggerThanThousandWillBeIgnored() {
+        Assert.assertEquals(438 , stringCalculator.add("//;\n1;2;34.56/345%1023"));
+    }
 }
