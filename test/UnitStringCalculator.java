@@ -34,7 +34,6 @@ public class UnitStringCalculator {
     @Test
     public void testUseAMethodAddToSumNumbersPassedOnASingleStringLine() {
         Assert.assertEquals(0, stringCalculator.add(""));
-
     }
     @Test
     public void testAStringWhichContainsNumbersToSum1() {
