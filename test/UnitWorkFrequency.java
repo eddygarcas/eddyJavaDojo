@@ -45,7 +45,7 @@ public class UnitWorkFrequency {
 
     @Test
     public void testCountHowManyTimesAWordIsContainedInAString() {
-        Assert.assertEquals(7, wordFrequency.count(LINE,VERBUM));
+        Assert.assertEquals(2, wordFrequency.count(LINE,VERBUM));
     }
 
 }

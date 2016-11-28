@@ -12,45 +12,43 @@ public class WordFrequency {
     public WordFrequency() {
     }
 
-    public int count(String line){
+    public int count(String... sententia){
         int total = 0;
-        //List<String> splited;
-        if (!line.isEmpty())
-            total = process(line,"[\\w]+");
+
+        if (!sententia[0].isEmpty() && sententia.length == 1)
+            total = process(sententia[0],"[\\w]+");
+        else if (!sententia[0].isEmpty() && !sententia[1].isEmpty())
+            total = process(sententia[0],"[\\w]+",sententia[1]);
         return total;
     }
 
-    public int count(String line,String word) {
-        return this.count(line);
-    }
 
-    private int process(String line, String regex) {
-        Set<String> result = new HashSet<String>();
+    private int process(String... caudex) {
 
-        Pattern p = Pattern.compile(regex);
-        Matcher m = p.matcher(line);
+        final boolean uniqueCount = caudex.length > 2 ? true : false;
 
-        while (m.find()) {
-            result.add(m.group(0));
-        }
-        return result.size();
-    }
+        final Set<String> countWords = new HashSet<String>();
 
-    private int process(String line,String regex,String word) {
-        Map<String,Integer> result = new HashMap<String,Integer>();
+        final Map<String,Integer> singleWord = new HashMap<String, Integer>();
 
-        Pattern p = Pattern.compile(regex);
-        Matcher m = p.matcher(line);
+        Pattern p = Pattern.compile(caudex[1]);
+        Matcher m = p.matcher(caudex[0]);
 
         while (m.find()) {
             String verbum = m.group(0);
-            if (result.containsKey(verbum)) {
-                int aux = result.get(verbum);
-                result.put(verbum,aux++);
-            }
 
+            if ( uniqueCount) {
+                 if (singleWord.containsKey(verbum)) {
+                     int aux = singleWord.get(verbum).intValue();
+                     singleWord.put(verbum, ++aux);
+                 } else
+                     singleWord.put(verbum, 1);
+            } else {
+                countWords.add(verbum);
+            }
         }
-        return result.get(word).intValue();
+
+        return uniqueCount ? singleWord.get(caudex[2]).intValue() : countWords.size();
 
     }
 }
